@@ -1,0 +1,47 @@
+Líneas 23 a 29 de "enteros.rkt"
+
+;;;;; Combinador de punto fijo
+
+(define Y
+  (lambda (f)
+    ((lambda (x) (f (lambda (v) ((x x) v))))
+     (lambda (x) (f (lambda (v) ((x x) v)))))))
+
+
+--------------------------------------------------------------------------------------------------
+
+Líneas 135 a 161 de "enteros.rkt"
+
+(define restanat (lambda (n)
+                     (lambda (m)
+                        ((m (lambda (x) (predecesor x))) n))))
+
+(define restonataux   ; Función que usa el combinador de punto fijo para aplicar recursividad
+    (lambda (n)       ; Argumento 1 (dividendo)
+        (lambda (m)   ; Argumento 2 (divisor, no cambia en llamadas recursivas)
+            ((Y (lambda (f) ; Operador de punto fijo sobre la función f de argumento x
+                 (lambda (x)
+                    ((((esmayoroigualnat x) m)   ; Condición de recursividad 
+                        (lambda (no_use)         ; Envoltorio con argumento formal sin valor real
+                            (f ((restanat x) m)) ; Caso general
+                        )
+                        (lambda (no_use)         ; Envoltorio con argumento formal sin valor real
+                            x                    ; Caso base
+                        )
+                    )
+                        zero)    ; Pasa zero como argumento de "no_use"
+                )
+            ))
+                n)  ; Pasa n como el valor inicial de x.
+        )
+))
+
+
+
+(define restonat
+    (lambda (n)
+        (lambda (m)
+            ((escero m) false ((restonataux n) m)) ; if (m es cero) then "false" else "operación"
+        )
+    )
+ ) 

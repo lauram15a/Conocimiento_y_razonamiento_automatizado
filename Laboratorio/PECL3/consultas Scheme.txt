@@ -1,0 +1,111 @@
+NATURALES
+
+(escero trois)
+#<procedure:false>
+((esmenornat cinq) trois)
+#<procedure:false>
+((esmenornat cinq) six)
+#<procedure:true>
+
+
+(comprobar((sumnat trois) quatre))
+7
+(comprobar((restonat sept) cinq))
+2
+(comprobar(primero ((par trois) deux)))
+3
+(comprobar(sucesor trois))
+4
+(comprobar((prodnat sept) cinq))
+35
+(comprobar((restonat sept) cinq))
+2
+
+
+ENTEROS
+
+((esmenorent cinco) tres)
+#<procedure:false>
+((esmayorent cinco) tres)
+#<procedure:true>
+
+
+(testenteros(segundo ((par cinco) siete)))
+7
+(testenteros(absoluto siete))
+7
+(testenteros(absoluto -once))
+11
+(testenteros((sument -once) quince))
+4
+(testenteros((mcdent dieciseis) cuatro))
+4
+
+
+
+-------------------------------------------------------------
+-Algunas definiciones básicas para manejar listas de enteros-
+-------------------------------------------------------------
+
+a) Permite visualizar listas por pantalla:
+
+(define comprobar-lista (lambda (l)
+             (if (= (comprobar (longitud l)) 0)
+                          '()
+                  (cons (testenteros (cabeza l)) (comprobar-lista (cola l))))))
+
+b) Definición de lista vacia según apuntes (pág. 60):
+
+(define vacia (lambda (x) x))
+
+c) Definición del cosntructor de una lista según apuntes (pág. 60):
+
+(define construir (lambda (x)
+                    (lambda (y)
+                      ((par false) ((par x) y)))))
+
+
+
+
+--------------------------------------
+-Algunas listas para realizar pruebas-
+--------------------------------------
+
+(define lista-1 ((construir uno) vacia))
+
+(define lista-2 ((construir dos) ((construir uno) vacia)))
+
+(define lista-3 ((construir diecisiete) ((construir -doce) ((construir veinte) ((construir dos) ((construir -seis) vacia))))))
+
+(define lista-4 ((construir siete) ((construir seis) ((construir doce) ((construir -diez) ((construir quince) ((construir nueve) vacia)))))))
+
+(define lista-5 ((construir siete) ((construir cero) ((construir -doce) ((construir diez) ((construir quince) ((construir uno) vacia)))))))
+
+
+-----------------------------------------------------------
+-Definir los siguientes términos en función de lo indicado- 
+-en los apuntes de teoría (págs. 59 y 60):                -
+-----------------------------------------------------------
+
+vacia?
+
+cabeza
+
+cola
+
+
+-----------------------------------------------------------
+-Probar que estas consultas dan los siguientes resultados:-
+-----------------------------------------------------------
+
+(comprobar-lista lista-3)
+(17 -12 20 2 -6)
+
+(vacia? lista-1)
+#<procedure:false>
+
+(testenteros (cabeza lista-3))
+17
+
+(comprobar-lista (cola lista-3))
+(-12 20 2 -6)
